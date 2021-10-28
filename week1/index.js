@@ -24,8 +24,6 @@ let hexArr = [
   },
 ];
 
-console.log(hexArr.blauw);
-
 function parseData() {
   return new Promise((resolve, reject) => {
     fetch(url).then((response) => {
@@ -41,7 +39,7 @@ function parseData() {
     .then((colors) => {
       // match color with hexcodes
       let hexCodes = connectColorToHex(colors);
-      console.log(hexCodes);
+      console.table(hexCodes);
     })
     .catch((error) => {
       console.log(error);
