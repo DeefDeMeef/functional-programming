@@ -1,6 +1,8 @@
 const url = "https://raw.githubusercontent.com/cmda-tt/course-21-22/main/tech-track-dataset.json";
 let ul = document.createElement("ul");
+const body = document.getElementsByTagName("body");
 
+// lookUpTable
 let hexArr = [
   {
     kleur: "blauw",
@@ -12,23 +14,26 @@ let hexArr = [
   },
   {
     kleur: "bruin",
-    hex: "#ffaf40",
+    hex: "#865439",
   },
   {
     kleur: "grijs",
-    hex: "#4b4b4b",
+    hex: "#716F81",
   },
   {
     kleur: "donkerbruin",
-    hex: "#000",
+    hex: "#483434",
   },
 ];
 
-function parseData() {
+const parseData = async () => {
   return new Promise((resolve, reject) => {
     fetch(url).then((response) => {
       if (response.ok) resolve(response.json());
-      else throw new Error("Er is iets misgegaan...");
+      else {
+        reject(new Error("Er is iets misgegaan in de api"));
+        window.alert("Helaas is er iets misgegaan...");
+      }
     });
   })
     .then((res) => {
@@ -40,11 +45,12 @@ function parseData() {
       // match color with hexcodes
       let hexCodes = connectColorToHex(colors);
       console.table(hexCodes);
+      return hexCodes;
     })
-    .catch((error) => {
-      console.log(error);
+    .then((table) => {
+      let colorTable = createColorTable(table);
     });
-}
+};
 
 const getAnswersMethod = (obj) => {
   const answerObject = obj.map((item) => {
@@ -52,7 +58,7 @@ const getAnswersMethod = (obj) => {
     let newStr = str.split(" ")[0];
     let li = document.createElement("li");
     li.innerHTML = newStr;
-    document.body.appendChild(li);
+    // document.body.appendChild(li);
     return newStr;
   });
   return answerObject;
@@ -60,6 +66,8 @@ const getAnswersMethod = (obj) => {
 
 const connectColorToHex = (obj) => {
   let colorValues = [];
+  // zet de values in alfabetische volgorde
+  obj.sort();
 
   for (let i = 0; obj.length > i; i++) {
     let myObj = hexArr.find((col) => col.kleur === obj[i]);
@@ -67,6 +75,25 @@ const connectColorToHex = (obj) => {
   }
 
   return colorValues;
+};
+
+const createColorTable = (obj) => {
+  let table = document.createElement("table");
+  obj.forEach((element) => {
+    const tr = table.insertRow();
+    const td = tr.insertCell();
+    td.appendChild(document.createTextNode(element.hex));
+    td.style.border = "2px solid" + element.hex;
+    td.classList.add(element.kleur);
+  });
+
+  // let strArray = ["q", "w", "w", "w", "e", "i", "u", "r"];
+  // let findDuplicates = (arr) => arr.filter((item, index) => arr.indexOf(item) != index);
+
+  // console.log(findDuplicates(obj)); // All duplicates
+  // console.log([...new Set(findDuplicates(obj))]); // Unique duplicates
+
+  document.body.appendChild(table);
 };
 
 parseData();
