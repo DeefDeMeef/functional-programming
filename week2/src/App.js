@@ -3,7 +3,7 @@ import { authEndpoint, clientId, redirectUri, scopes } from "./config";
 import hash from "./hash";
 import Player from "./Player";
 import ArtistData from "./ArtistData";
-import "./App.css";
+import "./styles/App.css";
 
 import spotifyProvider from "./utility/spotifyProvider";
 import cleanDataFunctions from "./cleanDataFunctions";
@@ -43,8 +43,9 @@ const App = () => {
 
         const clean = cleanDataFunctions.integerSeperator(artist);
         const percentage = cleanDataFunctions.getPopularityPercentage(clean);
+        const popularity = cleanDataFunctions.getPopularityEmotion(percentage);
 
-        state.artist = percentage;
+        state.artist = popularity;
       }
 
       setState(state);

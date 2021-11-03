@@ -1,5 +1,4 @@
 import React from "react";
-import "./Player.css";
 
 import PauseIcon from "./assets/pause.svg";
 import PlayIcon from "./assets/play.svg";

@@ -1,0 +1,30 @@
+.artist-wrapper {
+  padding: 1em;
+  display: flex;
+  flex-direction: row;
+}
+
+.artist-data {
+  display: flex;
+  flex-direction: row;
+}
+
+.artist-data > div {
+  padding: 0 1em;
+}
+
+.artist-avatar {
+  height: 7.5em;
+  width: 7.5em;
+  border-radius: 50%;
+}
+
+.popularity-bar {
+  height: 1em;
+  width: 10em;
+  background-color: grey;
+}
+
+.popularity-bar > div {
+  height: 1em;
+}
