@@ -1,13 +1,5 @@
 class CleanDataFunctions {
   integerSeperator(data) {
-    console.log("func data: ", data);
-    data.followers.total = data.followers.total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-    return data;
-  }
-
-  integerSeperatorLoop(data) {
-    console.log("func data: ", data);
-    // data.artists
     data.followers.total = data.followers.total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
     return data;
   }
@@ -35,6 +27,9 @@ class CleanDataFunctions {
         break;
       case x >= 80 && x <= 100:
         data.emotion = "Mega bekend 🤩";
+        break;
+      default:
+        data.emotion = "Laden...";
         break;
     }
     return data;

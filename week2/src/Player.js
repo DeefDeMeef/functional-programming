@@ -1,8 +1,5 @@
 import React from "react";
 
-import PauseIcon from "./assets/pause.svg";
-import PlayIcon from "./assets/play.svg";
-
 import "./styles/player.css";
 
 const Player = (props) => {

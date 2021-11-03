@@ -33,21 +33,29 @@ const App = () => {
   const getData = async () => {
     if (count === 0) setLoading(true);
     try {
-      const player = await spotifyProvider.getCurrentPlayingTrack(hash.access_token);
-      state.player = player;
-
-      if (state.player) {
-        const artist = await spotifyProvider.getArtistData(
-          hash.access_token,
-          state.player.item.artists[0].id
-        );
-
-        const clean = await cleanDataFunctions.integerSeperator(artist);
-        const percentage = await cleanDataFunctions.getPopularityPercentage(clean);
-        const popularity = await cleanDataFunctions.getPopularityEmotion(percentage);
-
-        state.artist = popularity;
-      }
+      await spotifyProvider
+        .getCurrentPlayingTrack(hash.access_token)
+        .then((player) => {
+          state.player = player;
+          return player;
+        })
+        .then((deta) => {
+          const artist = spotifyProvider.getArtistData(hash.access_token, deta.item.artists[0].id);
+          return artist;
+        })
+        .then((data) => {
+          let clean = cleanDataFunctions.integerSeperator(data);
+          return clean;
+        })
+        .then((res) => {
+          let percentage = cleanDataFunctions.getPopularityPercentage(res);
+          return percentage;
+        })
+        .then((percentage) => {
+          let popularity = cleanDataFunctions.getPopularityEmotion(percentage);
+          state.artist = popularity;
+          return popularity;
+        });
 
       if (state.artist) {
         const relatedArtists = await spotifyProvider.getRelatedArtists(
@@ -61,11 +69,9 @@ const App = () => {
       if (!loading) setLoading(false);
     } catch (err) {
       setLoading(false);
-      console.log(err);
+      alert(err.message);
     }
   };
-
-  console.log(state);
 
   return (
     <>

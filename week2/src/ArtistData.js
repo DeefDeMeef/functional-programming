@@ -1,18 +1,15 @@
-import { data } from "jquery";
 import React from "react";
 
 import "./styles/artistData.css";
 
 const ArtistData = (props) => {
-  // console.log("This is props: ", props);
-
   return (
     <>
       <h1 style={{ padding: "1em 1em 0em 1em" }}>Artiest data</h1>
       <article className="artist-wrapper">
         {props.data !== null && (
           <section className="artist-block artist-data">
-            <img className="artist-avatar" src={props.data.images[1].url} alt="artist profile pic" />
+            <img className="artist-avatar" src={props.data.images[0].url} alt="artist profile pic" />
             <div className="credentials-wrapper">
               <p>
                 <span className="bold">Artiest: </span>
