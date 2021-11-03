@@ -3,6 +3,7 @@ import { authEndpoint, clientId, redirectUri, scopes } from "./config";
 import hash from "./hash";
 import Player from "./Player";
 import ArtistData from "./ArtistData";
+import RelatedArtists from "./RelatedArtists";
 import "./styles/App.css";
 
 import spotifyProvider from "./utility/spotifyProvider";
@@ -48,6 +49,14 @@ const App = () => {
         state.artist = popularity;
       }
 
+      if (state.artist) {
+        const relatedArtists = await spotifyProvider.getRelatedArtists(
+          hash.access_token,
+          state.player.item.artists[0].id
+        );
+        state.relatedArtists = relatedArtists;
+      }
+
       setState(state);
       if (!loading) setLoading(false);
     } catch (err) {
@@ -74,7 +83,12 @@ const App = () => {
           </div>
         )}
         {state.artist && <ArtistData data={state.artist} />}
-        {hash.access_token && !state.player && <h1>Je moet een nummer afspelen om data te kunnen zien</h1>}
+        {state.relatedArtists && <RelatedArtists data={state.relatedArtists} />}
+        {hash.access_token && !state.player && (
+          <div className="login-btn-container">
+            <h1>Je moet een nummer afspelen om data te kunnen zien</h1>
+          </div>
+        )}
       </section>
     </>
   );

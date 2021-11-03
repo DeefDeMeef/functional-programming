@@ -7,47 +7,64 @@ const ArtistData = (props) => {
   // console.log("This is props: ", props);
 
   return (
-    <article className="artist-wrapper">
-      {props.data !== null && (
-        <div className="artist-data">
-          <img className="artist-avatar" src={props.data.images[1].url} alt="artist profile pic" />
-          <div className="credentials-wrapper">
-            <p>
-              <strong>Artist: </strong>
-              {props.data.name}
-            </p>
-            <p>
-              <strong>Followers: </strong>
-              {props.data.followers.total}
-            </p>
-            <p>
-              <strong>Popularity: </strong>
-              {props.data.popularity}
-            </p>
-            <p>{props.data.emotion}</p>
-          </div>
-        </div>
-      )}
-      <div>
-        <p>
-          <strong>Genres: </strong>
-        </p>
-        {props.data.genres[0] ? (
-          props.data.genres.map((item, index) => {
-            return (
-              <p key={index} style={{ textTransform: "capitalize" }}>
-                {item}
+    <>
+      <h1 style={{ padding: "1em 1em 0em 1em" }}>Artiesten data</h1>
+      <article className="artist-wrapper">
+        {props.data !== null && (
+          <section className="artist-block artist-data">
+            <img className="artist-avatar" src={props.data.images[1].url} alt="artist profile pic" />
+            <div className="credentials-wrapper">
+              <p>
+                <span className="bold">Artiest: </span>
+                {props.data.name}
               </p>
-            );
-          })
-        ) : (
-          <p>Wat maakt deze gast joh?</p>
+              <p>
+                <span className="bold">Volgers: </span>
+                {props.data.followers.total}
+              </p>
+            </div>
+          </section>
         )}
-      </div>
-      <div className="popularity-bar">
-        <div style={{ width: props.data.percentage + "%", backgroundColor: "blue" }}></div>
-      </div>
-    </article>
+        <section className="artist-block">
+          <p>
+            <span className="bold">Genres: </span>
+          </p>
+          {props.data.genres[0] ? (
+            props.data.genres
+              .map((item, index) => {
+                return (
+                  <p key={index} style={{ textTransform: "capitalize" }}>
+                    {item}
+                  </p>
+                );
+              })
+              .slice(0, 5)
+          ) : (
+            <p>Geen genres bekend</p>
+          )}
+        </section>
+        <section className="artist-block">
+          <p>
+            <span className="bold">Populariteit in procent: </span>
+            {props.data.popularity}%
+          </p>
+          <p>
+            <span className="bold">Populariteit in woorden: </span>
+            {props.data.emotion}
+          </p>
+          <p>
+            <span className="bold">Populariteit in een visualisatie:</span>
+          </p>
+          <div style={{ display: "flex", flexDirection: "row" }}>
+            <p>0</p>
+            <div className="popularity-bar">
+              <div className="popularity-bar-inner" style={{ width: props.data.percentage + "%" }}></div>
+            </div>
+            <p>100</p>
+          </div>
+        </section>
+      </article>
+    </>
   );
 };
 

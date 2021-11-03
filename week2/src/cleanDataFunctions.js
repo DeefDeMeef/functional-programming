@@ -16,17 +16,17 @@ class CleanDataFunctions {
       case x < 20:
         data.emotion = "Niet bekend 🥺";
         break;
-      case x > 20 && x < 40:
-        data.emotion = "Semi bekend 🙂";
+      case x >= 20 && x <= 40:
+        data.emotion = "Niet zo bekend 🙂";
         break;
-      case x > 40 && x < 60:
-        data.emotion = "Middel bekend 😁";
+      case x >= 40 && x <= 60:
+        data.emotion = "Gemiddeld bekend 😊";
         break;
-      case x > 60 && x < 80:
-        data.emotion = "Vrij bekend 😱";
+      case x >= 60 && x <= 80:
+        data.emotion = "Best bekend 😄";
         break;
-      case x > 80 && x < 100:
-        data.emotion = "Mega bekend 🤯";
+      case x >= 80 && x <= 100:
+        data.emotion = "Mega bekend 🤩";
         break;
     }
     return data;

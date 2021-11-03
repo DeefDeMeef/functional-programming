@@ -24,6 +24,19 @@ class SpotifyProvider {
     if (response.ok) return response.json();
     else return null;
   }
+
+  async getRelatedArtists(token, id) {
+    let response = await fetch("https://api.spotify.com/v1/artists/" + id + "/related-artists", {
+      method: "get",
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+    if (response.ok) return response.json();
+    else return null;
+  }
 }
 
 export default new SpotifyProvider();

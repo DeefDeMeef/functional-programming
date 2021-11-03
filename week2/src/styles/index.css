@@ -39,3 +39,9 @@ header {
   width: 4em;
   height: auto;
 }
+
+.artist-avatar {
+  height: 7.5em;
+  width: 7.5em;
+  border-radius: 50%;
+}

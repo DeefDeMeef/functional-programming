@@ -1,7 +1,20 @@
+span.bold {
+  font-weight: bold;
+}
+
 .artist-wrapper {
   padding: 1em;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+}
+
+section.artist-block {
+  width: 30%;
+  /* height: 40vh; */
+  background-color: #f8f8f8;
+  border-radius: 1em;
+  padding: 1em;
 }
 
 .artist-data {
@@ -13,18 +26,15 @@
   padding: 0 1em;
 }
 
-.artist-avatar {
-  height: 7.5em;
-  width: 7.5em;
-  border-radius: 50%;
-}
-
 .popularity-bar {
   height: 1em;
-  width: 10em;
-  background-color: grey;
+  width: 100%;
+  background-color: lightgrey;
+  border-radius: 1em;
 }
 
-.popularity-bar > div {
+.popularity-bar-inner {
   height: 1em;
+  border-radius: 1em;
+  background-color: #1db954;
 }
