@@ -5,172 +5,77 @@ import Player from "./Player";
 import ArtistData from "./ArtistData";
 import "./App.css";
 
+import spotifyProvider from "./utility/spotifyProvider";
+import cleanDataFunctions from "./cleanDataFunctions";
+
 const App = () => {
+  const [count, setCount] = useState(0);
   const [state, setState] = useState({});
+  const [loading, setLoading] = useState(false);
 
-  const [token, setToken] = useState("");
+  useEffect(() => {
+    if (hash.access_token) {
+      if (count === 0) getData();
+      const refreshData = tickerInterval();
+      return () => clearInterval(refreshData);
+    }
+  }, []);
 
-  // constructor() {
-  //   super();
-  //   state = {
-  //     token: null,
-  //     item: {
-  //       album: {
-  //         images: [{ url: "" }],
-  //       },
-  //       name: "",
-  //       artists: [{ name: "" }],
-  //       duration_ms: 0,
-  //     },
-  //     is_playing: "Paused",
-  //     progress_ms: 0,
-  //     no_data: false,
-  //     device: null,
-  //   };
+  const tickerInterval = () => {
+    const interval = setInterval(() => {
+      setCount((count) => count + 1);
+      getData();
+    }, 3000);
+    return interval;
+  };
 
-  //   this.getCurrentlyPlaying = this.getCurrentlyPlaying.bind(this);
-  //   this.tick = this.tick.bind(this);
-  // }
+  const getData = async () => {
+    if (count === 0) setLoading(true);
+    try {
+      const player = await spotifyProvider.getCurrentPlayingTrack(hash.access_token);
+      state.player = player;
 
-  // componentDidMount() {
-  //   // Set token
-  //   let _token = hash.access_token;
+      if (state.player) {
+        const artist = await spotifyProvider.getArtistData(
+          hash.access_token,
+          state.player.item.artists[0].id
+        );
 
-  //   if (_token) {
-  //     // Set token
-  //     this.setState({
-  //       token: _token,
-  //     });
-  //     this.getCurrentlyPlaying(_token);
-  //   }
+        const clean = cleanDataFunctions.integerSeperator(artist);
+        const percentage = cleanDataFunctions.getPopularityPercentage(clean);
 
-  //   // set interval for checking every 5 seconds
-  //   this.interval = setInterval(() => this.tick(), 5000);
-  // }
+        state.artist = percentage;
+      }
 
-  // componentWillUnmount() {
-  //   clearInterval(this.interval);
-  // }
-
-  // tick() {
-  //   if (this.state.token) {
-  //     this.getCurrentlyPlaying(this.state.token);
-  //   }
-  // }
-
-  const checkUser = () => {
-    let _token = hash.access_token;
-    if (_token) {
-      setToken(_token);
+      setState(state);
+      if (!loading) setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      console.log(err);
     }
   };
 
-  if (token) {
-    setInterval(() => {
-      console.log("komt hij weer");
-      getCurrentlyPlaying(token);
-    }, 5000);
-  }
-
-  console.log("Dit is de token state: ", token);
-
-  const getCurrentlyPlaying = async (bearenToken) => {
-    // Make a call using the token from login
-    await fetch("https://api.spotify.com/v1/me/player", {
-      method: "get",
-      headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + bearenToken,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("This is data: ", data);
-      });
-    // .then(async (res) => {
-    //   await fetch("https://api.spotify.com/v1/artists/" + state.id, {
-    //     method: "get",
-    //     headers: {
-    //       Accept: "application/json, text/plain, */*",
-    //       "Content-Type": "application/json",
-    //       Authorization: "Bearer " + token,
-    //     },
-    //   })
-    //     .then((response) => response.json())
-    //     .then((data) => {
-    //       console.log("This is artist data: ", data);
-    //       // setState({
-    //       //   followers: data.followers.total,
-    //       //   artistName: data.name,
-    //       //   popularity: data.popularity,
-    //       // });
-    //     });
-    // });
-  };
-
-  useEffect(() => {
-    checkUser();
-  }, []);
-
-  // async getArtistData(token, id) {
-  //   await fetch("https://api.spotify.com/v1/artists/" + id, {
-  //     method: "get",
-  //     headers: {
-  //       Accept: "application/json, text/plain, */*",
-  //       "Content-Type": "application/json",
-  //       Authorization: "Bearer " + token,
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       console.log("This is artist data: ", data);
-  //       this.setState({
-  //         followers: data.followers.total,
-  //         artistName: data.name,
-  //         popularity: data.popularity,
-  //       });
-  //     });
-  // }
+  console.log(state);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        {token && (
-          <>
-            {/* <Player
-              item={state.item}
-              is_playing={state.is_playing}
-              progress_ms={state.progress_ms}
-              device={state.device}
-            /> */}
-            <p>Ingelogd</p>
-          </>
+    <>
+      <header>{state.player && <Player data={state.player} />}</header>
+      <section>
+        {!hash.access_token && (
+          <div className="login-btn-container">
+            <a
+              className="btn btn--loginApp-link"
+              href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
+                "%20"
+              )}&response_type=token&show_dialog=true`}>
+              Login met Spotify
+            </a>
+          </div>
         )}
-        {state.no_data && <p>Je moet een nummer afspelen op je Spotify om iets te kunnen zien.</p>}
-      </header>
-
-      {token && (
-        <main>
-          <ArtistData
-            followers={state.followers}
-            artistName={state.artistName}
-            popularity={state.popularity}
-          />
-        </main>
-      )}
-      <div className="login-btn-container">
-        {!state.token && (
-          <a
-            className="btn btn--loginApp-link"
-            href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
-              "%20"
-            )}&response_type=token&show_dialog=true`}>
-            Login met Spotify
-          </a>
-        )}
-      </div>
-    </div>
+        {state.artist && <ArtistData data={state.artist} />}
+        {hash.access_token && !state.player && <h1>Je moet een nummer afspelen om data te kunnen zien</h1>}
+      </section>
+    </>
   );
 };
 
