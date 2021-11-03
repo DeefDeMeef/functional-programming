@@ -16,11 +16,12 @@ body {
   font-size: 3vmin;
   padding: 0.7em 1.5em;
   transition: all 0.25s ease;
+  text-decoration: none;
 }
 
 .btn:hover {
   background: #1db954;
-  color: #333;
+  color: #191414;
 }
 
 .btn--login {

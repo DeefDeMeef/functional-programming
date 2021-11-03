@@ -22,10 +22,9 @@ const Player = (props) => {
             <p>Currently playing: </p>
             <h1 className="now-playing-track-name">{props.data.item.name}</h1>
             <h3 className="now-playing-artist-name">{props.data.item.artists[0].name}</h3>
-          </div>
-          <div className="now-playing-icon" style={{ flex: "end" }}>
-            {props.data.device != null && <p>{props.data.device.name}</p>}
-            {props.data.is_playing ? <img src={PauseIcon} alt="pause" /> : <img src={PlayIcon} alt="play" />}
+            {props.data.device != null && (
+              <p style={{ paddingTop: "1em" }}>Wordt afgespeeld op: {props.data.device.name}</p>
+            )}
           </div>
         </div>
         <div className="progress-wrapper">

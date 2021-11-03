@@ -8,7 +8,7 @@ const ArtistData = (props) => {
 
   return (
     <>
-      <h1 style={{ padding: "1em 1em 0em 1em" }}>Artiesten data</h1>
+      <h1 style={{ padding: "1em 1em 0em 1em" }}>Artiest data</h1>
       <article className="artist-wrapper">
         {props.data !== null && (
           <section className="artist-block artist-data">
@@ -38,9 +38,9 @@ const ArtistData = (props) => {
                   </p>
                 );
               })
-              .slice(0, 5)
+              .slice(0, 3)
           ) : (
-            <p>Geen genres bekend</p>
+            <p>Geen genre(s) bekend</p>
           )}
         </section>
         <section className="artist-block">

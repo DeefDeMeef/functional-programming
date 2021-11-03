@@ -42,9 +42,9 @@ const App = () => {
           state.player.item.artists[0].id
         );
 
-        const clean = cleanDataFunctions.integerSeperator(artist);
-        const percentage = cleanDataFunctions.getPopularityPercentage(clean);
-        const popularity = cleanDataFunctions.getPopularityEmotion(percentage);
+        const clean = await cleanDataFunctions.integerSeperator(artist);
+        const percentage = await cleanDataFunctions.getPopularityPercentage(clean);
+        const popularity = await cleanDataFunctions.getPopularityEmotion(percentage);
 
         state.artist = popularity;
       }
