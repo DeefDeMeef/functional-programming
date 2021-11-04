@@ -37,10 +37,11 @@ const App = () => {
         .getCurrentPlayingTrack(hash.access_token)
         .then((player) => {
           state.player = player;
+          console.log(player);
           return player;
         })
-        .then((deta) => {
-          const artist = spotifyProvider.getArtistData(hash.access_token, deta.item.artists[0].id);
+        .then((res) => {
+          const artist = spotifyProvider.getArtistData(hash.access_token, res.item.artists[0].id);
           return artist;
         })
         .then((data) => {
@@ -69,7 +70,6 @@ const App = () => {
       if (!loading) setLoading(false);
     } catch (err) {
       setLoading(false);
-      alert(err.message);
     }
   };
 
