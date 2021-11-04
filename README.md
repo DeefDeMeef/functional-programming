@@ -43,7 +43,7 @@ npm start
 ```
 Vervolgens krijg je een link vanuit de terminal waar de applicatie op te vinden is.
 De applicatie werkt nu nog niet maar de verwachte output zou er zo uit moeten zien: 
-```
+```js
 Compiled successfully!
 
 You can now view spotify-player in the browser.
