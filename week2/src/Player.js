@@ -1,8 +1,7 @@
 import React from "react";
 
 const Player = (props) => {
-  // console.log(props);
-
+  // if props render content en anders return error message
   if (props) {
     const progressBarStyles = {
       width: (props.data.progress_ms * 100) / props.data.item.duration_ms + "%",

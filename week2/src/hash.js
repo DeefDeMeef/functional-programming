@@ -1,4 +1,4 @@
-// Get the hash of the url
+// pak de hash uit de huidige url
 const hash = window.location.hash
   .substring(1)
   .split("&")
@@ -7,8 +7,8 @@ const hash = window.location.hash
       let parts = item.split("=");
       initial[parts[0]] = decodeURIComponent(parts[1]);
     }
+    // deze functie returned alle params uit de url zodat deze global gebruikt kunnen worden
     return initial;
   }, {});
-// window.location.hash = "";
 
 export default hash;

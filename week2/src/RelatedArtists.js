@@ -6,6 +6,7 @@ const RelatedArtists = (props) => {
       <h1 style={{ padding: "0em 1em" }}>Relatieve artiesten</h1>
 
       <section className="related-artist-wrapper">
+        {/* if props.data render dan de content */}
         {props.data &&
           props.data.artists
             .map((item, index) => {
@@ -23,6 +24,7 @@ const RelatedArtists = (props) => {
                 </article>
               );
             })
+            // laat er max 5 zien
             .slice(0, 5)}
       </section>
     </>

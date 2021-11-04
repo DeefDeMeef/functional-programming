@@ -1,16 +1,19 @@
 class CleanDataFunctions {
   integerSeperator(data) {
+    // normale duizendtal notatie geen idee hoe het heet maar het word 1,000,000 ipv 1000000
     data.followers.total = data.followers.total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
     return data;
   }
 
   getPopularityPercentage(data) {
+    // reken percentage uit
     const percentage = (data.popularity * 100) / 100;
     data.percentage = percentage;
     return data;
   }
 
   getPopularityEmotion(data) {
+    // switch case om te zeggen hoe bekend iemand is in woorden
     const x = data.popularity;
     switch (true) {
       case x < 20:
@@ -35,9 +38,5 @@ class CleanDataFunctions {
     return data;
   }
 }
-
-// popularity -> percentage
-// parse -> followers with .
-// popularity color + emotion based on how high it is
 
 export default new CleanDataFunctions();

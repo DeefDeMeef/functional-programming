@@ -1,4 +1,5 @@
 class SpotifyProvider {
+  // spotify API calls
   async getCurrentPlayingTrack(token) {
     let response = await fetch("https://api.spotify.com/v1/me/player", {
       method: "get",
@@ -8,6 +9,8 @@ class SpotifyProvider {
         Authorization: "Bearer " + token,
       },
     });
+    // if statuscode 200 return response ander null, hierdoor laat de frontend ook niks zien omdat het null is en de components dan niet
+    // renderen
     if (response.ok) return response.json();
     else return null;
   }

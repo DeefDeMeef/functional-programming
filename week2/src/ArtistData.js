@@ -7,6 +7,7 @@ const ArtistData = (props) => {
     <>
       <h1 style={{ padding: "1em 1em 0em 1em" }}>Artiest data</h1>
       <article className="artist-wrapper">
+        {/* if props.data render content */}
         {props.data !== null && (
           <section className="artist-block artist-data">
             <img className="artist-avatar" src={props.data.images[0].url} alt="artist profile pic" />
@@ -26,6 +27,7 @@ const ArtistData = (props) => {
           <p>
             <span className="bold">Genres: </span>
           </p>
+          {/* laat max 3 genres zien en als er geen genres zijn zet 'geen genres' neer */}
           {props.data.genres[0] ? (
             props.data.genres
               .map((item, index) => {
